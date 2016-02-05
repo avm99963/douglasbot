@@ -16,11 +16,11 @@ include_once("core.php");
 	<body>
 		<h1>Reversiones válidas para el Wikiconcurso de reversores</h1>
 		<?php
-		if (isset($_POST["username"]) && !empty($_POST["username"])) {
+		if (isset($_GET["username"]) && !empty($_GET["username"])) {
 			$contribs = array();
 			$continue = "";
 			while (true) {
-				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2016-02-01T00:01:00Z")."&ucstart=".urlencode("2016-02-29T23:59:00Z")."&ucuser=".urlencode($_POST["username"])."&uclimit=500".$continue);
+				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2016-02-01T00:01:00Z")."&ucstart=".urlencode("2016-02-29T23:59:00Z")."&ucuser=".urlencode($_GET["username"])."&uclimit=500".$continue);
 
 				$contribs = array_merge($contribs, $contribs_i["query"]["usercontribs"]);
 
@@ -41,7 +41,7 @@ include_once("core.php");
 				}
 			}
 			?>
-			<p><b><?=htmlspecialchars($_POST["username"])?></b> ha hecho <b><?=$reversions?></b> <?=(($reversions == 1) ? "reversión" : "reversiones")?> durante el concurso.</b></p>
+			<p><b><?=htmlspecialchars($_GET["username"])?></b> ha hecho <b><?=$reversions?></b> <?=(($reversions == 1) ? "reversión" : "reversiones")?> durante el concurso.</b></p>
 			<?php
 			if (count($contribs)) {
 				?>
