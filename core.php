@@ -40,6 +40,8 @@ function post_curl($action, $fields) {
 }
 
 function login($username, $password) {
+	global $session;
+
 	$return = post_curl("login", "lgname=".urlencode($username)."&lgpassword=".urlencode($password));
 	$json = json_decode($return, true);
 
@@ -49,7 +51,7 @@ function login($username, $password) {
 	
 	$json2 = json_decode($return2, true);
 	if ($json2["login"]["result"] == "Success") {
-		return $json2["login"]["lgtoken"];
+		return true;
 	} else {
 		die("Ha habido un problema al iniciar sesión.\n");
 	}
