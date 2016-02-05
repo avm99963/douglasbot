@@ -6,9 +6,6 @@
  */
 
 include_once("core.php");
-
-/*$username = "Douglasbot";
-$password = "5u9?/"PD.DEsP]BP";*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,6 +14,7 @@ $password = "5u9?/"PD.DEsP]BP";*/
 		<title>Contador de reversiones</title>
 	</head>
 	<body>
+		<h1>Reversiones válidas para el Wikiconcurso de reversores</h1>
 		<?php
 		if (isset($_POST["username"]) && !empty($_POST["username"])) {
 			$contribs = array();
@@ -35,13 +33,30 @@ $password = "5u9?/"PD.DEsP]BP";*/
 
 			$reversions = 0;
 
-			foreach ($contribs as $contrib) {
+			foreach ($contribs as $key => $contrib) {
 				if (preg_match("/Revertidos los cambios de .* a la última edición de .*/i", $contrib["comment"]) == 1) {
 					$reversions++;
+				} else {
+					unset($contribs[$key]);
 				}
 			}
 			?>
-			<p><b><?=htmlspecialchars($_POST["username"])?></b> ha hecho <b><?=$reversions?></b> <?=(($reversions == 1) ? "reversión" : "reversiones")?>.</b></p>
+			<p><b><?=htmlspecialchars($_POST["username"])?></b> ha hecho <b><?=$reversions?></b> <?=(($reversions == 1) ? "reversión" : "reversiones")?> durante el concurso.</b></p>
+			<?php
+			if (count($contribs)) {
+				?>
+				<ol>
+				<?php
+				foreach ($contribs as $contrib) {
+					?>
+					<li><a href="https://es.wikipedia.org/w/index.php?diff=<?=$contrib["revid"]?>"><?=$contrib["title"]?></a>&nbsp;&nbsp;(<i><?=$contrib["comment"]?></i>)</li>
+					<?php
+				}
+				?>
+				</ol>
+				<?php
+			}
+			?>
 			<hr>
 			<?php
 		}
