@@ -49,7 +49,7 @@ include_once("core.php");
 				<?php
 				foreach ($contribs as $contrib) {
 					?>
-					<li><a href="https://es.wikipedia.org/w/index.php?diff=<?=$contrib["revid"]?>"><?=$contrib["title"]?></a>&nbsp;&nbsp;(<i><?=$contrib["comment"]?></i>)</li>
+					<li><?=date("H:i d M Y", strtotime($contrib["timestamp"]))?> . . <a href="https://es.wikipedia.org/w/index.php?diff=<?=$contrib["revid"]?>"><?=$contrib["title"]?></a>&nbsp;&nbsp;(<i><?=$contrib["comment"]?></i>)</li>
 					<?php
 				}
 				?>
