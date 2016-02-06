@@ -17,8 +17,7 @@ function api_query($action, $fields) {
 }
 
 function post_curl($action, $fields) {
-	global $session;
-	global $apiurl;
+	global $session, $apiurl;
 
 	$ch = curl_init();
 
@@ -26,9 +25,12 @@ function post_curl($action, $fields) {
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, "format=json&action=".$action.((!empty($fields)) ? "&".$fields : ""));
 
-	if (!empty($session)) {
+	/*if (!empty($session)) {
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array("Cookie: ".$session));
-	}
+	}*/
+
+	curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookies.txt');
+	curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookies.txt');
 
 	// receive server response ...
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -52,6 +54,7 @@ function login($username, $password) {
 
 	$json2 = json_decode($return2, true);
 	if ($json2["login"]["result"] == "Success") {
+		$session = $json["login"]["cookieprefix"]."Session=".$json["login"]["sessionid"];
 		return true;
 	} else {
 		fwrite(STDERR, "Ha habido un problema al iniciar sesión.\n");

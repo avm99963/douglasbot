@@ -86,6 +86,6 @@ unlink("cookies.txt");
 if ($editresponse["edit"]["result"] == "Success") {
 	exit(0);
 } else {
-	fwrite(STDERR, "No se ha podido guardar la página Wikiproyecto:Vandalismo/Concurso (".$editresponse["edit"]["code"].": ".$editresponse["edit"]["warning"].").\n");
+	fwrite(STDERR, "No se ha podido guardar la página Wikiproyecto:Vandalismo/Concurso (".$editresponse["edit"]["code"].": ".$editresponse["edit"]["warning"].").\nCSRF token: ".$csrftoken);
 	exit(1);
 }
