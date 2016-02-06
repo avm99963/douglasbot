@@ -76,7 +76,7 @@ $finalrows = "|-\n".implode("\n|-\n", $rows);
 $finaltext = str_replace($raw_contestants, $finalrows, $page);
 
 preg_match("/\<small\>Actualizado última vez por \[\[Usuario:Douglasbot\|Douglasbot\]\]: (.*?)\<\/small\>/i", $finaltext, $updated);
-$finaltext = str_replace("<small>Actualizado última vez por [[Usuario:Douglasbot|Douglasbot]]: ".$updated[1]."</small>", "<small>Actualizado última vez por [[Usuario:Douglasbot|Douglasbot]]: ".date("j M H:i", time())."</small>", $finaltext);
+$finaltext = str_replace("<small>Actualizado última vez por [[Usuario:Douglasbot|Douglasbot]]: ".$updated[1]."</small>", "<small>Actualizado última vez por [[Usuario:Douglasbot|Douglasbot]]: ".date("j M H:i", time())." UTC</small>", $finaltext);
 
 $csrftoken = api_query("query", "meta=tokens");
 
