@@ -12,6 +12,7 @@ include_once("core.php");
 	<head>
 		<meta charset="UTF-8">
 		<title>Contador de reversiones</title>
+		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body>
 		<h1>Reversiones válidas para el Wikiconcurso de reversores</h1>
