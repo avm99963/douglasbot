@@ -14,7 +14,7 @@ login($username, $password);
 $page = api_query("query", "titles=Usuario:Douglasbot/Concurso&prop=revisions&rvprop=content");
 $page = $page["query"]["pages"][7283499]["revisions"][0]["*"]; // Cuando el módulo esté listo para usarse, cambiar el número a 7260845
 
-preg_match("/\! Ediciones validadas(.*?)\|\}/is", $page, $contestants);
+preg_match("/\! Reversiones(.*?)\|\}/is", $page, $contestants);
 $raw_contestants = trim($contestants[1]);
 
 $array_contestants = array();
@@ -64,8 +64,6 @@ foreach ($array_contestants as $contestant) {
 	}
 
 	$leaderboard[$contestant] = $reversions;
-
-	break;
 }
 
 $rows = array();
