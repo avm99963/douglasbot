@@ -12,7 +12,7 @@ login($username, $password);
 
 // Cuando este módulo esté listo para usarse, cambiar Usuario:Douglasbot/Concurso por Wikiproyecto:Vandalismo/Concurso
 $page = api_query("query", "titles=Usuario:Douglasbot/Concurso&prop=revisions&rvprop=content");
-$page = $page["query"]["pages"][7260845]["revisions"][0]["*"];
+$page = $page["query"]["pages"][7283499]["revisions"][0]["*"]; // Cuando el módulo esté listo para usarse, cambiar el número a 7260845
 
 preg_match("/\! Ediciones validadas(.*?)\|\}/is", $page, $contestants);
 $raw_contestants = trim($contestants[1]);
@@ -64,6 +64,8 @@ foreach ($array_contestants as $contestant) {
 	}
 
 	$leaderboard[$contestant] = $reversions;
+
+	break;
 }
 
 $rows = array();
@@ -74,8 +76,9 @@ foreach ($leaderboard as $leader => $rollbacks) {
 $finalrows = "|-\n".implode("\n|-\n", $rows);
 
 $finaltext = str_replace($raw_contestants, $finalrows, $page);
-preg_match("/\<small\>Actualizado última vez por \[\[Usuario:Douglasbot\|\]\]: (.*?)\<\/small\>/i", $finaltext, $updated);
-$finaltext = str_replace("<small>Actualizado última vez por [[Usuario:Douglasbot|]]: ".$updated[1]."</small>", "<small>Actualizado última vez por [[Usuario:Douglasbot|]]: ".date("j M H:i")."</small>", $finaltext);
+
+preg_match("/\<small\>Actualizado última vez por \[\[Usuario:Douglasbot\|Douglasbot\]\]: (.*?)\<\/small\>/i", $finaltext, $updated);
+$finaltext = str_replace("<small>Actualizado última vez por [[Usuario:Douglasbot|Douglasbot]]: ".$updated[1]."</small>", "<small>Actualizado última vez por [[Usuario:Douglasbot|Douglasbot]]: ".date("j M H:i", time())."</small>", $finaltext);
 
 $csrftoken = api_query("query", "meta=tokens");
 
