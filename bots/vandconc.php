@@ -74,14 +74,11 @@ $finalrows = "|-\n".implode("\n|-\n", $rows);
 
 $finaltext = str_replace($raw_contestants, $finalrows, $page);
 
-// Cuando este módulo esté listo para usarse, eliminar las siguientes dos líneas.
-echo $finaltext;
-exit;
-
 $csrftoken = api_query("query", "meta=tokens");
 $csrftoken = $csrftoken["query"]["tokens"]["csrftoken"];
 
-$editresponse = json_decode(post_curl("edit", "title=Wikiproyecto:Vandalismo/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
+// Cuando este módulo esté listo para usarse, cambiar Usuario:Douglasbot/Concurso por Wikiproyecto:Vandalismo/Concurso
+$editresponse = json_decode(post_curl("edit", "title=Usuario:Douglasbot/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
 
 if ($editresponse["edit"]["result"] == "Success") {
 	exit(0);
