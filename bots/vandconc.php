@@ -10,7 +10,8 @@ include_once("config.php");
 
 login($username, $password);
 
-$page = api_query("query", "titles=Wikiproyecto:Vandalismo/Concurso&prop=revisions&rvprop=content")["query"]["pages"][7260845]["revisions"][0]["*"];
+$page = api_query("query", "titles=Wikiproyecto:Vandalismo/Concurso&prop=revisions&rvprop=content");
+$page = $page["query"]["pages"][7260845]["revisions"][0]["*"];
 
 preg_match("/\! Ediciones validadas(.*?)\|\}/is", $page, $contestants);
 $raw_contestants = trim($contestants[1]);
@@ -77,7 +78,8 @@ $finaltext = str_replace($raw_contestants, $finalrows, $page);
 echo $finaltext;
 exit;
 
-$csrftoken = api_query("query", "meta=tokens")["query"]["tokens"]["csrftoken"];
+$csrftoken = api_query("query", "meta=tokens");
+$csrftoken = $csrftoken["query"]["tokens"]["csrftoken"];
 
 $editresponse = json_decode(post_curl("edit", "title=Wikiproyecto:Vandalismo/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
 
