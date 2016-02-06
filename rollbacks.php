@@ -61,7 +61,7 @@ include_once("core.php");
 			<?php
 		}
 		?>
-		<form action="reversions.php" method="GET">
+		<form action="rollbacks.php" method="GET">
 			<p>Usuario: <input type="text" name="username" required></p>
 			<p><input type="submit" value="Enviar"></p>
 		</form>
