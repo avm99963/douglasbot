@@ -75,14 +75,17 @@ $finalrows = "|-\n".implode("\n|-\n", $rows);
 $finaltext = str_replace($raw_contestants, $finalrows, $page);
 
 $csrftoken = api_query("query", "meta=tokens");
+
 $csrftoken = $csrftoken["query"]["tokens"]["csrftoken"];
 
 // Cuando este módulo esté listo para usarse, cambiar Usuario:Douglasbot/Concurso por Wikiproyecto:Vandalismo/Concurso
 $editresponse = json_decode(post_curl("edit", "title=Usuario:Douglasbot/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
 
+unlink("cookies.txt");
+
 if ($editresponse["edit"]["result"] == "Success") {
 	exit(0);
 } else {
-	fwrite(STDERR, "No se ha podido guardar la página Wikiproyecto:Vandalismo/Concurso.\n");
+	fwrite(STDERR, "No se ha podido guardar la página Wikiproyecto:Vandalismo/Concurso (".$editresponse["edit"]["code"].": ".$editresponse["edit"]["warning"].").\n");
 	exit(1);
 }
