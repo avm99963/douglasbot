@@ -32,12 +32,12 @@ foreach (explode("\n", $raw_contestants) as $contestant) {
 
 $leaderboard = array();
 
-if ($argv[1] == "verbose") {
+if (isset($argv[1]) && $argv[1] == "verbose") {
 	echo "Hay ".count($array_contestants)." concursantes en total.\n";
 }
 
 foreach ($array_contestants as $contestant) {
-	if ($argv[1] == "verbose") {
+	if (isset($argv[1]) && $argv[1] == "verbose") {
 		echo "Contando reversiones de ".$contestant."...\n";
 	}
 	$contribs = array();
