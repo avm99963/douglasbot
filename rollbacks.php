@@ -21,7 +21,7 @@ include_once("core.php");
 			$contribs = array();
 			$continue = "";
 			while (true) {
-				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2016-02-01T00:01:00Z")."&ucstart=".urlencode("2016-02-29T23:59:00Z")."&ucuser=".urlencode($_GET["username"])."&uclimit=500".$continue);
+				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2016-02-01T00:01:00Z")."&ucstart=".urlencode("2016-02-29T23:59:00Z")."&ucuser=".urlencode($_GET["username"])."&uclimit=500&ucprop=ids|title|timestamp|comment|parsedcomment".$continue);
 
 				$contribs = array_merge($contribs, $contribs_i["query"]["usercontribs"]);
 
@@ -50,7 +50,7 @@ include_once("core.php");
 				<?php
 				foreach ($contribs as $contrib) {
 					?>
-					<li><?=date("H:i d M Y", strtotime($contrib["timestamp"]))?> . . <a href="https://es.wikipedia.org/w/index.php?diff=<?=$contrib["revid"]?>"><?=$contrib["title"]?></a>&nbsp;&nbsp;(<i><?=$contrib["comment"]?></i>)</li>
+					<li><?=date("H:i d M Y", strtotime($contrib["timestamp"]))?> . . <a href="https://es.wikipedia.org/w/index.php?diff=<?=$contrib["revid"]?>"><?=$contrib["title"]?></a>&nbsp;&nbsp;(<i><?=$contrib["parsedcomment"]?></i>)</li>
 					<?php
 				}
 				?>

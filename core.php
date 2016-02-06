@@ -6,6 +6,7 @@
  */
 
 date_default_timezone_set("UTC");
+setlocale(LC_TIME, "es_ES");
 
 $apiurl = "https://es.wikipedia.org/w/api.php";
 
@@ -45,14 +46,15 @@ function login($username, $password) {
 	$return = post_curl("login", "lgname=".urlencode($username)."&lgpassword=".urlencode($password));
 	$json = json_decode($return, true);
 
-	$session = $json["login"]["cookieprefix"]."_session=".$json["login"]["sessionid"];
+	$session = $json["login"]["cookieprefix"]."Session=".$json["login"]["sessionid"];
 
 	$return2 = post_curl("login", "lgname=".urlencode($username)."&lgpassword=".urlencode($password)."&lgtoken=".urlencode($json["login"]["token"]));
-	
+
 	$json2 = json_decode($return2, true);
 	if ($json2["login"]["result"] == "Success") {
 		return true;
 	} else {
-		die("Ha habido un problema al iniciar sesión.\n");
+		fwrite(STDERR, "Ha habido un problema al iniciar sesión.\n");
+		exit(1);
 	}
 }
