@@ -10,7 +10,7 @@ include_once("config.php");
 
 login($username, $password);
 
-$page = api_query("query", "titles=Wikiproyecto:Vandalismo/Concurso/Concurso&prop=revisions&rvprop=content");
+$page = api_query("query", "titles=Wikiproyecto:Vandalismo/Concurso&prop=revisions&rvprop=content");
 $page = $page["query"]["pages"][7260845]["revisions"][0]["*"];
 
 preg_match("/\! Reversiones(.*?)\|\}/is", $page, $contestants);
