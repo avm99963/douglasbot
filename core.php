@@ -45,6 +45,12 @@ function post_curl($action, $fields) {
 function login($username, $password) {
 	global $session;
 
+	$userinfo = api_query("query", "meta=userinfo");
+
+	if ($userinfo["query"]["userinfo"]["id"] != 0) {
+		return true;
+	}
+
 	$return = post_curl("login", "lgname=".urlencode($username)."&lgpassword=".urlencode($password));
 	$json = json_decode($return, true);
 
@@ -57,7 +63,7 @@ function login($username, $password) {
 		$session = $json["login"]["cookieprefix"]."Session=".$json["login"]["sessionid"];
 		return true;
 	} else {
-		fwrite(STDERR, "Ha habido un problema al iniciar sesión.\n");
+		fwrite(STDERR, "Ha habido un problema al iniciar sesión: ".$json2["login"]["result"]."\n");
 		exit(1);
 	}
 }

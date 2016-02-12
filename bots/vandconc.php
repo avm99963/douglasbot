@@ -10,9 +10,8 @@ include_once("config.php");
 
 login($username, $password);
 
-// Cuando este módulo esté listo para usarse, cambiar Usuario:Douglasbot/Concurso por Wikiproyecto:Vandalismo/Concurso
-$page = api_query("query", "titles=Usuario:Douglasbot/Concurso&prop=revisions&rvprop=content");
-$page = $page["query"]["pages"][7283499]["revisions"][0]["*"]; // Cuando el módulo esté listo para usarse, cambiar el número a 7260845
+$page = api_query("query", "titles=Wikiproyecto:Vandalismo/Concurso/Concurso&prop=revisions&rvprop=content");
+$page = $page["query"]["pages"][7260845]["revisions"][0]["*"];
 
 preg_match("/\! Reversiones(.*?)\|\}/is", $page, $contestants);
 $raw_contestants = trim($contestants[1]);
@@ -82,8 +81,7 @@ $csrftoken = api_query("query", "meta=tokens");
 
 $csrftoken = $csrftoken["query"]["tokens"]["csrftoken"];
 
-// Cuando este módulo esté listo para usarse, cambiar Usuario:Douglasbot/Concurso por Wikiproyecto:Vandalismo/Concurso
-$editresponse = json_decode(post_curl("edit", "title=Usuario:Douglasbot/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|Bot]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
+$editresponse = json_decode(post_curl("edit", "title=Wikiproyecto:Vandalismo/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|Bot]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
 
 unlink("cookies.txt");
 
