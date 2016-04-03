@@ -59,7 +59,7 @@ include_once("votocore.php");
                 $cuentaregistrada = ($user["user_registration"] < $datetimemw ? true : false);
 
                 if (isset($mincontribuciones)) {
-                    $query3 = mysqli_query($con, "SELECT null FROM revision_userindex rev JOIN page ON rev.rev_page = page.page_id WHERE rev.rev_user = ".(int)$user["user_id"]." AND rev.rev_timestamp < ".$datetimemw.($espacioprincipalyanexo === true ? " AND (page.page_namespace = 0 OR page.page_namespace = 104)" : "")) or die(mysqli_error($con));
+                    $query3 = mysqli_query($con, "SELECT null FROM revision_userindex rev JOIN page ON rev.rev_page = page.page_id WHERE rev.rev_user = ".(int)$user["user_id"]." AND rev.rev_timestamp < ".$datetimemw.($espacioprincipalyanexo === true ? " AND page.page_namespace in (0, 104)" : "")) or die(mysqli_error($con));
 
                     $contribuciones = mysqli_num_rows($query3);
 
