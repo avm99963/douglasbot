@@ -14,12 +14,13 @@ include_once("votocore.php");
         <title>Verificar derecho a voto</title>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="css/derechoavoto.css">
+        <meta name="robots" content="all">
     </head>
     <body>
         <?php
-        if (isset($_GET["username"]) && !empty($_GET["username"]) && !substr_count($_GET["username"], "|")) {
+        if (isset($_GET["username"]) && !empty($_GET["username"])) {
             ?>
-            <h1>Verificar derecho a voto de <?=$_GET["username"]?></h1>
+            <h1>Verificar derecho a voto de <?=htmlspecialchars($_GET["username"])?></h1>
             <?php
             $now = time();
 
@@ -49,7 +50,9 @@ include_once("votocore.php");
                 $espacioprincipalyanexo = false;
             }
 
-            $query = mysqli_query($con, "SELECT user_id, user_registration FROM user WHERE user_name = '".mysqli_real_escape_string($con, $_GET["username"])."' LIMIT 1") or die(mysqli_error($con));
+            $username = mysqli_real_escape_string($con, $_GET["username"]);
+
+            $query = mysqli_query($con, "SELECT user_id, user_registration FROM user WHERE user_name = '".$username."' LIMIT 1") or die(mysqli_error($con));
 
             if (mysqli_num_rows($query)) {
                 $user = mysqli_fetch_assoc($query);
@@ -59,14 +62,14 @@ include_once("votocore.php");
                 $cuentaregistrada = ($user["user_registration"] < $datetimemw ? true : false);
 
                 if (isset($mincontribuciones)) {
-                    $query3 = mysqli_query($con, "SELECT null FROM revision_userindex rev JOIN page ON rev.rev_page = page.page_id WHERE rev.rev_user = ".(int)$user["user_id"]." AND rev.rev_timestamp < ".$datetimemw.($espacioprincipalyanexo === true ? " AND page.page_namespace in (0, 104)" : "")) or die(mysqli_error($con));
+                    $query3 = mysqli_query($con, "SELECT null FROM revision_userindex rev JOIN page ON rev.rev_page = page.page_id WHERE rev.rev_user_text = ".(int)$username." AND rev.rev_timestamp < ".$datetimemw.($espacioprincipalyanexo === true ? " AND page.page_namespace in (0, 104)" : "")) or die(mysqli_error($con));
 
                     $contribuciones = mysqli_num_rows($query3);
 
                     $contribucionescorrectas = ($contribuciones < $mincontribuciones ? false : true);
 
                     if (isset($minantiguedad)) {
-                        $query2 = mysqli_query($con, "SELECT rev_timestamp FROM revision_userindex WHERE rev_user = ".(int)$user["user_id"]." AND rev_timestamp < ".$datetimemw." ORDER BY rev_timestamp ASC LIMIT 1") or die(mysqli_error($con));
+                        $query2 = mysqli_query($con, "SELECT rev_timestamp FROM revision_userindex WHERE rev_user_text = ".(int)$username." AND rev_timestamp < ".$datetimemw." ORDER BY rev_timestamp ASC LIMIT 1") or die(mysqli_error($con));
 
                         if (mysqli_num_rows($query2)) {
                             $rev = mysqli_fetch_assoc($query2);
@@ -93,7 +96,7 @@ include_once("votocore.php");
 
                 if (isset($minantiguedad)) {
                     $datetime = time();
-                    $antiguedad = seconds_to_time($datetime, $datetime);
+                    $antiguedad = 0;
                 }
             }
 
@@ -101,7 +104,7 @@ include_once("votocore.php");
             ?>
             <div class="requisito <?=($cuentaregistrada === true ? "cumplido" : "nocumplido")?>">El usuario <b><?=($cuentaregistrada === true ? "" : "no ")?>se ha registrado</b> en la Wikipedia en español<?=($now == $datetime ? "" : " antes de empezar la votación")?> (<?=date("d M Y H:i", $registrationdate)?>).</div>
 
-			<?php
+            <?php
             if (isset($mincontribuciones)) {
             	?>
             	<div class="requisito <?=($contribucionescorrectas === true ? "cumplido" : "nocumplido")?>">El usuario ha hecho <b><?=$contribuciones?></b> contribuciones en <?=($espacioprincipalyanexo ? "el espacio principal y anexos" : "la Wikipedia en español").($now == $datetime ? "" : " antes de empezar la votación")?> (mín. <?=$mincontribuciones?>).</div>
