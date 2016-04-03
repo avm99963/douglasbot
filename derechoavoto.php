@@ -92,17 +92,18 @@ include_once("votocore.php");
 
                 if (isset($mincontribuciones)) {
                     $contribucionescorrectas = false;
+                    $contribuciones = 0;
                 }
 
                 if (isset($minantiguedad)) {
-                    $datetime = time();
+                    $antiguedadcorrecta = false;
                     $antiguedad = 0;
                 }
             }
 
             $derechoavoto = (($cuentaregistrada === true && (!isset($mincontribuciones) || $contribucionescorrectas === true) && (!isset($minantiguedad) || $antiguedadcorrecta === true)) ? true : false);
             ?>
-            <div class="requisito <?=($cuentaregistrada === true ? "cumplido" : "nocumplido")?>">El usuario <b><?=($cuentaregistrada === true ? "" : "no ")?>se ha registrado</b> en la Wikipedia en español<?=($now == $datetime ? "" : " antes de empezar la votación")?> (<?=date("d M Y H:i", $registrationdate)?>).</div>
+            <div class="requisito <?=($cuentaregistrada === true ? "cumplido" : "nocumplido")?>">El usuario <b><?=($cuentaregistrada === true ? "" : "no ")?>se ha registrado</b> en la Wikipedia en español<?=($now == $datetime ? "" : " antes de empezar la votación")?><?=($cuentaregistrada === true ? " (".date("d M Y H:i", $registrationdate).")" : "")?>.</div>
 
             <?php
             if (isset($mincontribuciones)) {
