@@ -62,14 +62,14 @@ include_once("votocore.php");
                 $cuentaregistrada = ($user["user_registration"] < $datetimemw ? true : false);
 
                 if (isset($mincontribuciones)) {
-                    $query3 = mysqli_query($con, "SELECT null FROM revision_userindex rev JOIN page ON rev.rev_page = page.page_id WHERE rev.rev_user_text = ".(int)$username." AND rev.rev_timestamp < ".$datetimemw.($espacioprincipalyanexo === true ? " AND page.page_namespace in (0, 104)" : "")) or die(mysqli_error($con));
+                    $query3 = mysqli_query($con, "SELECT null FROM revision_userindex rev JOIN page ON rev.rev_page = page.page_id WHERE rev.rev_user = ".(int)$user["user_id"]." AND rev.rev_timestamp < ".$datetimemw.($espacioprincipalyanexo === true ? " AND page.page_namespace in (0, 104)" : "")) or die(mysqli_error($con));
 
                     $contribuciones = mysqli_num_rows($query3);
 
                     $contribucionescorrectas = ($contribuciones < $mincontribuciones ? false : true);
 
                     if (isset($minantiguedad)) {
-                        $query2 = mysqli_query($con, "SELECT rev_timestamp FROM revision_userindex WHERE rev_user_text = ".(int)$username." AND rev_timestamp < ".$datetimemw." ORDER BY rev_timestamp ASC LIMIT 1") or die(mysqli_error($con));
+                        $query2 = mysqli_query($con, "SELECT rev_timestamp FROM revision_userindex WHERE rev_user = ".(int)$user["user_id"]." AND rev_timestamp < ".$datetimemw." ORDER BY rev_timestamp ASC LIMIT 1") or die(mysqli_error($con));
 
                         if (mysqli_num_rows($query2)) {
                             $rev = mysqli_fetch_assoc($query2);
