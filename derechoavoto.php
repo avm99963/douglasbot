@@ -15,6 +15,7 @@ include_once("votocore.php");
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="css/derechoavoto.css">
         <meta name="robots" content="all">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
         <?php
