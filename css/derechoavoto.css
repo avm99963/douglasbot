@@ -1,0 +1,18 @@
+.requisito {
+	width: 750px;
+	max-width: Calc(100% - 16px)!important;
+	border: solid 1px #808080;
+	background: #D3D3D3;
+	padding: 8px;
+	margin-bottom: 6px;
+}
+
+.requisito.cumplido {
+	background: #90EE90!important;
+	border: solid 1px #008000!important;
+}
+
+.requisito.nocumplido {
+	background: #FFBCBC!important;
+	border: #FF0000 1px red!important;
+}
