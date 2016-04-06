@@ -11,7 +11,7 @@ include_once("config.php");
 login($username, $password);
 
 $page = api_query("query", "titles=Wikiproyecto:Vandalismo/Concurso&prop=revisions&rvprop=content");
-$page = $page["query"]["pages"][7260845]["revisions"][0]["*"];
+$page = $page["query"]["pages"][key($page["query"]["pages"])]["revisions"][0]["*"];
 
 preg_match("/\! Reversiones(.*?)\|\}/is", $page, $contestants);
 $raw_contestants = trim($contestants[1]);
@@ -43,7 +43,7 @@ foreach ($array_contestants as $contestant) {
 	$contribs = array();
 	$continue = "";
 	while (true) {
-		$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2016-02-01T00:01:00Z")."&ucstart=".urlencode("2016-02-29T23:59:00Z")."&ucuser=".urlencode($contestant)."&uclimit=500".$continue);
+		$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2016-04-11T00:01:00Z")."&ucstart=".urlencode("2016-05-11T23:59:00Z")."&ucuser=".urlencode($contestant)."&uclimit=500".$continue);
 
 		$contribs = array_merge($contribs, $contribs_i["query"]["usercontribs"]);
 
