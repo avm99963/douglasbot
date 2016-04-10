@@ -81,7 +81,7 @@ $csrftoken = api_query("query", "meta=tokens");
 
 $csrftoken = $csrftoken["query"]["tokens"]["csrftoken"];
 
-$editresponse = json_decode(post_curl("edit", "title=Usuario:Douglasbot/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|Bot]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
+$editresponse = json_decode(post_curl("edit", "title=Wikiproyecto:Vandalismo/Concurso&text=".urlencode($finaltext)."&summary=".urlencode("[[Wikipedia:Bot|Bot]] actualizando tabla de reversiones")."&minor=true&md5=".urlencode(md5($finaltext))."&token=".urlencode($csrftoken)), true);
 
 unlink("cookies.txt");
 
