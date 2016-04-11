@@ -20,8 +20,24 @@ include_once("core.php");
 		if (isset($_GET["username"]) && !empty($_GET["username"])) {
 			$contribs = array();
 			$continue = "";
+
+			if (isset($_GET["edition"])) {
+				switch ($_GET["edition"]) {
+					case "1":
+					$start = "2016-02-29T23:59:00Z";
+					$end = "2016-02-01T00:01:00Z";
+					break;
+
+					case "2":
+					default:
+					$start = "2016-05-11T23:59:00Z";
+					$end = "2016-04-11T00:01:00Z";
+					break;
+				}
+			}
+
 			while (true) {
-				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2016-02-01T00:01:00Z")."&ucstart=".urlencode("2016-02-29T23:59:00Z")."&ucuser=".urlencode($_GET["username"])."&uclimit=500&ucprop=ids|title|timestamp|comment|parsedcomment".$continue);
+				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode($end)."&ucstart=".urlencode($start)."&ucuser=".urlencode($_GET["username"])."&uclimit=500&ucprop=ids|title|timestamp|comment|parsedcomment".$continue);
 
 				$contribs = array_merge($contribs, $contribs_i["query"]["usercontribs"]);
 
@@ -64,6 +80,7 @@ include_once("core.php");
 		?>
 		<form action="rollbacks.php" method="GET">
 			<p>Usuario: <input type="text" name="username" required></p>
+			<p>Edición: <select name="edition"><option value="2" selected>Segunda edición</option><option value="1">Primera edición</option></select></p>
 			<p><input type="submit" value="Enviar"></p>
 		</form>
 	</body>
