@@ -149,5 +149,7 @@ include_once("votocore.php");
             <p>Fecha de inicio de la votación (UTC): <input type="datetime-local" name="datetime"<?=((isset($_GET["datetime"]) && !empty($_GET["datetime"])) ? " value=\"".htmlspecialchars($_GET["datetime"])."\"" : "")?>></p>
             <p><input type="submit" value="Enviar"></p>
         </form>
+
+        <p><small>Para saber más sobre las votaciones y los requisitos actuales para votar, véase <a href="https://es.wikipedia.org/wiki/Wikipedia:Votaciones">Wikipedia:Votaciones</a>.</small></p>
     </body>
 </html>

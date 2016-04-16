@@ -1,7 +1,7 @@
 <?php
 require_once("dbconfig.php");
 
-$con = mysqli_connect($server, $user, $password, $database);
+$con = @mysqli_connect($server, $user, $password, $database) or die("No se ha podido conectar correctamente a la base de datos de Wikipedia. Por favor, informa de esto en la <a href='https://es.wikipedia.org/w/index.php?title=Usuario_discusión:Avm99963&action=edit&section=new&preloadtitle=Error%20en%20Douglasbot:%20derechoavoto.php%20no%20se%20puede%20conectar%20a%20la%20base%20de%20datos&preload=Plantilla:Informe_de_error_con_bot/precarga'>página de discusión de Avm99963</a>.");
 
 date_default_timezone_set("UTC");
 
