@@ -1,0 +1,9 @@
+{
+    "name" : "douglasbot",
+    "title" : "Douglasbot",
+    "description" : "Tools and bots created for the Spanish Wikipedia.",
+    "url" : "https://tools.wmflabs.org/douglasbot/",
+    "keywords" : "eswiki, reversions, votes",
+    "author" : "Avm99963",
+    "repository" : "https://github.com/avm99963/douglasbot.git"
+}
