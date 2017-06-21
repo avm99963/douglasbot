@@ -5,6 +5,8 @@
  *
  */
 
+include_once("bots/config.php");
+
 date_default_timezone_set("UTC");
 setlocale(LC_TIME, "es_ES");
 
@@ -17,7 +19,8 @@ function api_query($action, $fields) {
 }
 
 function post_curl($action, $fields) {
-	global $session, $apiurl;
+	global $apiurl;
+	//global $session;
 
 	$ch = curl_init();
 
@@ -43,7 +46,7 @@ function post_curl($action, $fields) {
 }
 
 function login($username, $password) {
-	global $session;
+	//global $session;
 
 	$userinfo = api_query("query", "meta=userinfo");
 
@@ -54,13 +57,13 @@ function login($username, $password) {
 	$return = post_curl("login", "lgname=".urlencode($username)."&lgpassword=".urlencode($password));
 	$json = json_decode($return, true);
 
-	$session = $json["login"]["cookieprefix"]."Session=".$json["login"]["sessionid"];
+	//$session = $json["login"]["cookieprefix"]."Session=".$json["login"]["sessionid"];
 
 	$return2 = post_curl("login", "lgname=".urlencode($username)."&lgpassword=".urlencode($password)."&lgtoken=".urlencode($json["login"]["token"]));
 
 	$json2 = json_decode($return2, true);
 	if ($json2["login"]["result"] == "Success") {
-		$session = $json["login"]["cookieprefix"]."Session=".$json["login"]["sessionid"];
+		//$session = $json["login"]["cookieprefix"]."Session=".$json["login"]["sessionid"];
 		return true;
 	} else {
 		fwrite(STDERR, "Ha habido un problema al iniciar sesión: ".$json2["login"]["result"]."\n");

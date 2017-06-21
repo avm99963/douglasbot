@@ -29,15 +29,23 @@ include_once("core.php");
 					break;
 
 					case "2":
-					default:
 					$start = "2016-05-11T23:59:00Z";
 					$end = "2016-04-11T00:01:00Z";
 					break;
+
+					case "3":
+					default:
+					$start = "2017-07-01T00:01:00Z";
+					$end = "2017-08-05T23:59:00Z";
+					break;
 				}
+			} else {
+				$start = "2017-07-01T00:01:00Z";
+				$end = "2017-08-05T23:59:00Z";
 			}
 
 			while (true) {
-				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode($end)."&ucstart=".urlencode($start)."&ucuser=".urlencode($_GET["username"])."&uclimit=500&ucprop=ids|title|timestamp|comment|parsedcomment".$continue);
+				$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode($end)."&ucstart=".urlencode($start)."&ucuser=".urlencode($_GET["username"])."&uclimit=".($isbot === true ? 5000 : 500)."&ucprop=ids|title|timestamp|comment|parsedcomment".$continue);
 
 				$contribs = array_merge($contribs, $contribs_i["query"]["usercontribs"]);
 
@@ -80,7 +88,7 @@ include_once("core.php");
 		?>
 		<form action="rollbacks.php" method="GET">
 			<p>Usuario: <input type="text" name="username" required></p>
-			<p>Edición: <select name="edition"><option value="2" selected>Segunda edición</option><option value="1">Primera edición</option></select></p>
+			<p>Edición: <select name="edition"><option value="3" selected>Tercera edición</option><option value="2">Segunda edición (abril 2016)</option><option value="1">Primera edición (febrero 2016)</option></select></p>
 			<p><input type="submit" value="Enviar"></p>
 		</form>
 	</body>
