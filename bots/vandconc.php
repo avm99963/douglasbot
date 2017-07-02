@@ -43,7 +43,7 @@ foreach ($array_contestants as $contestant) {
 	$contribs = array();
 	$continue = "";
 	while (true) {
-		$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2017-08-05T23:59:00Z")."&ucstart=".urlencode("2017-07-01T00:01:00Z")."&ucuser=".urlencode($contestant)."&uclimit=500".$continue);
+		$contribs_i = api_query("query", "list=usercontribs&ucend=".urlencode("2017-07-01T00:01:00Z")."&ucstart=".urlencode("2017-08-05T23:59:00Z")."&ucuser=".urlencode($contestant)."&uclimit=500".$continue);
 
 		$contribs = array_merge($contribs, $contribs_i["query"]["usercontribs"]);
 
